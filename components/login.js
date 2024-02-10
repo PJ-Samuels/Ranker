@@ -13,9 +13,10 @@ export default function Login() {
     return(
     <View style={styles.container}>
         <Text>Video Game Rater</Text>
+        <Text>Login </Text>
         <StatusBar style="auto" />
         <Button
-          title="Press me"
+          title="Login"
           color = "blue"
           onPress={() => buttonPress()}
         />

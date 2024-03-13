@@ -12,24 +12,14 @@ export default function Home() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`https://rawg.io/api/games?key=${apiKey}`);
-                const data = await response.json();
-                const game = data.results.slice(0, 1);
-                const name = game[0].name;
-                const id = game[0].id;
-                const image = game[0].background_image;
-                setData([{ name, id, image }]);
+
 
                 // const querySnapshot = await getDocs(collection(db, "user_games"));
                 // querySnapshot.forEach((doc) => {
                 //     console.log(`${doc.id} => ${doc.data()}`);
                 //   });
 
-                // const docRef = await addDoc(collection(db, "user_games"), {
-                //     game: "GTA V",
-                //     gid: 12345,
-                //     uid: 1815
-                // });
+
 
                   
             } catch (error) {
@@ -44,12 +34,26 @@ export default function Home() {
         setText(text);
     }
     const searchSubmit = () =>{
-        console.log(text);
+        const response = fetch(`https://rawg.io/api/games?key=${apiKey}&search=${text}`);
+        const data = response.json();
+        const game = data.results.slice(0, 1);
+        const name = game[0].name;
+        const id = game[0].id;
+        const image = game[0].background_image;
+        setData([{ name, id, image }]);
+    }
+    const addGame = async() => {
+        const docRef = await addDoc(collection(db, "user_games"), {
+            game: data[0].name,
+            image: data[0].image,
+            gid: data[0].id,
+            uid: 1,
+        });
     }
     return (
         <View>
             <Text>User Home Page</Text>
-            {/* {data.map((game, index) => (
+            {data.map((game, index) => (
                 <View key={index}>
                     <Text>{game.name}</Text>
                     <Image
@@ -57,7 +61,7 @@ export default function Home() {
                         style={{ width: 100, height: 100 }}
                     />
                 </View>
-            ))} */}
+            ))}
                   <TextInput
                     editable
                     multiline
@@ -71,6 +75,7 @@ export default function Home() {
             title="Submit"
             onPress = {() => searchSubmit()}/>
             <Text>Enter a video game name here</Text>
+            <Button title = "Add" addGame = {() => addGame()}/>
         </View>
     );
 }

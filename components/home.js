@@ -33,14 +33,23 @@ export default function Home() {
     const onChangeText = (text) => {
         setText(text);
     }
-    const searchSubmit = () =>{
-        const response = fetch(`https://rawg.io/api/games?key=${apiKey}&search=${text}`);
-        const data = response.json();
-        const game = data.results.slice(0, 1);
-        const name = game[0].name;
-        const id = game[0].id;
-        const image = game[0].background_image;
-        setData([{ name, id, image }]);
+    const searchSubmit =  () =>{
+        const getData = async () => {
+            try{
+                const response = await fetch(`https://rawg.io/api/games?search=${text}&key=${apiKey}`);
+                const data = await response.json();
+                const game = data.results.slice(0, 1);
+                const name = game[0].name;
+                const id = game[0].id;
+                const image = game[0].background_image;
+                setData([{ name, id, image }]);
+            }
+            catch{
+                console.log('error')
+            }
+        };
+        getData();
+
     }
     const addGame = async() => {
         const docRef = await addDoc(collection(db, "user_games"), {
@@ -49,6 +58,7 @@ export default function Home() {
             gid: data[0].id,
             uid: 1,
         });
+        console.log("completed")
     }
     return (
         <View>
@@ -75,7 +85,7 @@ export default function Home() {
             title="Submit"
             onPress = {() => searchSubmit()}/>
             <Text>Enter a video game name here</Text>
-            <Button title = "Add" addGame = {() => addGame()}/>
+            <Button title = "Add" onPress = {() => addGame()}/>
         </View>
     );
 }

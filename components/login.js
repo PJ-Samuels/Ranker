@@ -21,7 +21,7 @@ export default function Login() {
               if (querySnapshot.size > 0) {
                 querySnapshot.forEach((doc) => {
                   console.log("Password is valid for username:", doc.data().username);
-                  navigation.navigate('Home');
+                  navigation.navigate('Home', {username});
                 });
               } else {
                 console.log("Invalid username or password.");

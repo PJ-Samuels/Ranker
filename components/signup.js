@@ -22,7 +22,7 @@ export default function Signup(){
             password: password
         });
         console.log("confirmButton")
-        navigation.navigate('Home')
+        navigation.navigate('Home', {username})
     }
     return(
     <>

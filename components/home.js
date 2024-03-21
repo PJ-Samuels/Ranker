@@ -5,10 +5,11 @@ import { db } from '../firebaseConfig'
 import { collection, getDocs, addDoc, where, query} from "firebase/firestore";
 import { Rating, RatingProps } from '@rneui/themed';
 // import {RAWGAPIKEY} from "react-native-dotenv"
-export default function Home() {
+export default function Home({ route }) {
     const [data, setData] = useState([]);
     const [userGames, setGames] = useState([]);
     const [text, setText] = useState('');
+    const { username } = route.params;
 
     // const apiKey = RAWGAPI
     // console.log(apiKey)
@@ -22,7 +23,7 @@ export default function Home() {
     useEffect(() => {
         const fetchData = async () => {
             try{
-                const querySnapshot = await getDocs(query(collection(db, "user_games"), where("uid", "==", 1)));
+                const querySnapshot = await getDocs(query(collection(db, "user_games"), where("uid", "==", username)));
                 var games = [];
                 querySnapshot.forEach((doc) => {
                     // console.log(`${doc.id} => ${doc.data()}`);
@@ -57,7 +58,7 @@ export default function Home() {
             game: data[0].name,
             image: data[0].image,
             gid: data[0].id,
-            uid: 1,
+            uid: username,
         });
     }
     const mygames = () =>{

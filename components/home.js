@@ -4,12 +4,17 @@ import { Button, Alert, StyleSheet, Text, View, Image, TextInput, ScrollView } f
 import { db } from '../firebaseConfig'
 import { collection, getDocs, addDoc, where, query} from "firebase/firestore";
 import { Rating, RatingProps } from '@rneui/themed';
-
+// import {RAWGAPIKEY} from "react-native-dotenv"
 export default function Home() {
     const [data, setData] = useState([]);
     const [userGames, setGames] = useState([]);
     const [text, setText] = useState('');
+
+    // const apiKey = RAWGAPI
+    // console.log(apiKey)
     const apiKey = '0cca977a2f9f43caa5f37f1cbdea2f64';
+    const navigation = useNavigation();
+
     const ratingCompleted = (rating) => {
         console.log('Rating is: ' + rating);
     };
@@ -55,46 +60,89 @@ export default function Home() {
             uid: 1,
         });
     }
+    const mygames = () =>{
+        navigation.navigate('MyGames');
+    }
+    const styles = StyleSheet.create({
+        games:{
+            display: 'flex',
+            flexDirection: 'column',
+            flexWrap: 'wrap',
+            justifyContent: 'space-around',
+            padding: 20,
+        },
+        input:{
+            height: 40,
+            width: 250,
+            margin: 12,
+            borderWidth: 1,
+            padding: 5,
+
+        },
+        add:{
+
+            flexDirection: 'column',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: 20,
+        },
+        search:{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+        }
+
+    });
     return (
         <View>
-            <Text>User Home Page</Text>
+            <View style={{ justifyContent: 'center', alignItems: 'center' }}><Text>Home</Text>
+            </View>
+
+            <View style = {{justifyContent: "center", alignItems: 'center',}}>
             {data.map((game, index) => (
-                <View key={index}>
+                <View style = {styles.add} key={index}>
                     <Text>{game.name}</Text>
                     <Image
                         source={{ uri: game.image }}
                         style={{ width: 100, height: 100 }}
                     />
+                    <Button title = "Add" onPress = {() => addGame()}/>
                 </View>
+                
             ))}
-                  <TextInput
+            </View>
+
+                <Text>Enter a video game name here</Text>
+            <View style = {styles.search}>
+                <TextInput
                     editable
-                    multiline
-                    numberOfLines={4}
-                    maxLength={40}
+                    // multiline
+                    // numberOfLines={4}
+                    // maxLength={40}
                     onChangeText={text => onChangeText(text)}
                     value={text}
-                    style={{padding: 10}}
+                    style={styles.input}
                 />
-            <Button           
-            title="Submit"
-            onPress = {() => searchSubmit()}/>
-            <Text>Enter a video game name here</Text>
-            <Button title = "Add" onPress = {() => addGame()}/>
-            <Text>My Games</Text>
+                <Button           
+                title="Submit"
+                onPress = {() => searchSubmit()}/>
+            </View>
+
+            <Text onPress = {() => mygames()}>My Games</Text>
             <ScrollView horizontal>
             {userGames.map((game, index) => (
-                <View key={index} >
+                <View style = {styles.games} key={index} >
                     <Text>{game.name}</Text>
                     <Image
                         source={{ uri: game.image }}
-                        style={{ width: 100, height: 100 }}
+                        style={{ display: "flex", width: 200, height: 200 }}
                     />
                     <Rating
                         showRating
                         imageSize={40}
-                        onFinishRating={ratingCompleted}
-                        style={{ paddingVertical: 10 }}
+                        // onFinishRating={ratingCompleted}
+                        style={{ backgroundColor: "gray", paddingVertical: 10 }}
                         />
                 </View>
                 
@@ -102,4 +150,5 @@ export default function Home() {
             </ScrollView>
         </View>
     );
+
 }

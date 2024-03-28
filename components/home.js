@@ -1,14 +1,17 @@
 import React, { useEffect, useState, useSyncExternalStore } from "react";
+import Navbar from "./navbar";
 import { useNavigation } from "@react-navigation/native";
 import { Button, Alert, StyleSheet, Text, View, Image, TextInput, ScrollView } from 'react-native';
 import { db } from '../firebaseConfig'
 import { collection, getDocs, addDoc, where, query} from "firebase/firestore";
-import { Rating, RatingProps } from '@rneui/themed';
+import { Rating, RatingProps } from 'react-native-ratings';
+// import { Rating, AirbnbRating } from 'react-native-elements';
 // import {RAWGAPIKEY} from "react-native-dotenv"
 export default function Home({ route }) {
     const [data, setData] = useState([]);
     const [userGames, setGames] = useState([]);
     const [text, setText] = useState('');
+    const [rating, setRating] = useState([]);
     const { username } = route.params;
 
     // const apiKey = RAWGAPI
@@ -17,6 +20,7 @@ export default function Home({ route }) {
     const navigation = useNavigation();
 
     const ratingCompleted = (rating) => {
+        setRating(rating)
         console.log('Rating is: ' + rating);
     };
     
@@ -27,8 +31,9 @@ export default function Home({ route }) {
                 var games = [];
                 querySnapshot.forEach((doc) => {
                     // console.log(`${doc.id} => ${doc.data()}`);
-                    games.push({name: doc.data().game, image: doc.data().image, id: doc.data().gid});
+                    games.push({name: doc.data().game, image: doc.data().image, rating: doc.data().rating, id: doc.data().gid});
                 });
+                console.log(games);
                 setGames(games);
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -48,7 +53,8 @@ export default function Home({ route }) {
             const name = game[0].name;
             const id = game[0].id;
             const image = game[0].background_image;
-            setData([{ name, id, image }]);
+            const rating = game[0].rating;
+            setData([{ name, id, image, rating }]);
         };
         getData();
 
@@ -59,6 +65,7 @@ export default function Home({ route }) {
             image: data[0].image,
             gid: data[0].id,
             uid: username,
+            rating: rating
         });
     }
     const mygames = () =>{
@@ -106,7 +113,17 @@ export default function Home({ route }) {
                     <Text>{game.name}</Text>
                     <Image
                         source={{ uri: game.image }}
-                        style={{ width: 100, height: 100 }}
+                        style={{ width: 200, height: 200 }}
+                    />
+                    <Rating
+                        id = {game.id}
+                        type='custom'
+                        showRating
+                        onFinishRating={ratingCompleted}
+                        ratingColor='red'
+                        ratingBackgroundColor='#c8c7c8'
+                        startingValue= {3}
+                        ratingCount ={5}
                     />
                     <Button title = "Add" onPress = {() => addGame()}/>
                 </View>
@@ -135,20 +152,28 @@ export default function Home({ route }) {
             {userGames.map((game, index) => (
                 <View style = {styles.games} key={index} >
                     <Text>{game.name}</Text>
+                    <Text>{game.rating}</Text>
                     <Image
                         source={{ uri: game.image }}
                         style={{ display: "flex", width: 200, height: 200 }}
                     />
-                    <Rating
-                        showRating
-                        imageSize={40}
-                        // onFinishRating={ratingCompleted}
-                        style={{ backgroundColor: "gray", paddingVertical: 10 }}
+                    <View pointerEvents="none">
+                        <Rating
+                            id = {game.id}
+                            type='custom'
+                            showRating
+                            // onFinishRating={ratingCompleted}
+                            ratingColor='red'
+                            ratingBackgroundColor='#c8c7c8'
+                            startingValue={game.rating}
+                            ratingCount ={5}
                         />
+                    </View>
                 </View>
                 
             ))}
             </ScrollView>
+            <Navbar/>
         </View>
     );
 

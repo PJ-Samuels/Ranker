@@ -2,9 +2,10 @@ import React from "react";
 // import {NavigationContainer} from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { useNavigation } from "@react-navigation/native";
-import { Button, Alert,StyleSheet, Text, View, TextInput } from 'react-native';
+import { Alert,StyleSheet, Text, View, TextInput } from 'react-native';
 import { db } from '../firebaseConfig'
 import { collection, getDocs, addDoc, where, query} from "firebase/firestore";
+import { Input, Icon, Button } from '@rneui/themed';
 
 export default function Login() {
     const navigation = useNavigation();
@@ -40,11 +41,16 @@ export default function Login() {
     return(
     <View style={styles.container}>
         <Text>Video Game Rater</Text>
-        <Text>Username</Text>
-        <TextInput editable onChangeText = {username => setUser(username)} value={username}/>
-        <Text>Password</Text>
-        <TextInput editable onChangeText = {password => setPass(password)} value={password}/>
-        <Text>Login </Text>
+        {/* <Text>Username</Text> */}
+        <Input
+          placeholder='Username'
+          onChangeText = {username => setUser(username)} value={username}
+        />
+        {/* <TextInput editable onChangeText = {username => setUser(username)} value={username}/> */}
+        {/* <Text>Password</Text> */}
+        <Input placeholder="password" onChangeText = {password => setPass(password)} value={password}/>
+        {/* <TextInput editable onChangeText = {password => setPass(password)} value={password}/>
+        <Text>Login </Text> */}
 
         <Button
           title="Login"

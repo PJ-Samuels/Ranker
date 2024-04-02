@@ -1,37 +1,58 @@
 import React from 'react';
-import { Button, Alert, StyleSheet, Text, View, Image, TextInput, ScrollView } from 'react-native';
-import {Tab} from '@rneui/themed';
-import { BottomNavigation } from 'react-native-paper';
-export default function Navbar(){
-    const [index, setIndex] = React.useState(0);
-    return(
-        <>
-            <Text>Navbar</Text>
-            <Tab
-      value={index}
-      onChange={(e) => setIndex(e)}
-      indicatorStyle={{
-        backgroundColor: 'white',
-        height: 3,
-      }}
-      variant="primary"
-    >
-      <Tab.Item
-        title="Recent"
-        titleStyle={{ fontSize: 12 }}
-        icon={{ name: 'timer', type: 'ionicon', color: 'white' }}
-      />
-      <Tab.Item
-        title="favorite"
-        titleStyle={{ fontSize: 12 }}
-        icon={{ name: 'heart', type: 'ionicon', color: 'white' }}
-      />
-      <Tab.Item
-        title="cart"
-        titleStyle={{ fontSize: 12 }}
-        icon={{ name: 'cart', type: 'ionicon', color: 'white' }}
-      />
-    </Tab>
-        </>
-    )
+import { Alert } from 'react-native';
+import { Tab } from '@rneui/themed';
+import { useNavigation } from "@react-navigation/native";
+
+export default function Navbar() {
+  const [index, setIndex] = React.useState(0);
+  const navigation = useNavigation();
+
+  const titles = ["Home", "Search", "Profile", "Discover", "Friends"];
+
+  const changePage = (selectedIndex) => {
+    setIndex(selectedIndex);
+    // You can add navigation logic here based on the selected index
+    switch (selectedIndex) {
+      case 0:
+        navigation.navigate('Home')
+        break;
+      case 1:
+        navigation.navigate('Search')
+        break;
+      case 2:
+        navigation.navigate('MyGames')
+        break;
+      case 3:
+        navigation.navigate('Discover')
+        break;
+      case 4:
+        navigation.navigate('Friends')
+        break;
+      default:
+        break;
+    }
+  }
+
+  return (
+    <>
+      <Tab
+        value={index}
+        onChange={(selectedIndex) => changePage(selectedIndex)}
+        indicatorStyle={{
+          backgroundColor: 'white',
+          height: 3,
+        }}
+        variant="primary"
+      >
+        {titles.map((title, tabIndex) => (
+          <Tab.Item
+            key={tabIndex}
+            title={title}
+            titleStyle={{ fontSize: 12 }}
+            icon={{type: 'ionicon', color: 'white' }}
+          />
+        ))}
+      </Tab>
+    </>
+  )
 }

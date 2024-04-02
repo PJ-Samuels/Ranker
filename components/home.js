@@ -19,10 +19,7 @@ export default function Home({ route }) {
     const apiKey = '0cca977a2f9f43caa5f37f1cbdea2f64';
     const navigation = useNavigation();
 
-    const ratingCompleted = (rating) => {
-        setRating(rating)
-        console.log('Rating is: ' + rating);
-    };
+
     
     useEffect(() => {
         const fetchData = async () => {
@@ -33,7 +30,6 @@ export default function Home({ route }) {
                     // console.log(`${doc.id} => ${doc.data()}`);
                     games.push({name: doc.data().game, image: doc.data().image, rating: doc.data().rating, id: doc.data().gid});
                 });
-                console.log(games);
                 setGames(games);
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -42,32 +38,7 @@ export default function Home({ route }) {
         fetchData();
     }, []);
 
-    const onChangeText = (text) => {
-        setText(text);
-    }
-    const searchSubmit =  () =>{
-        const getData = async () => {
-            const response = await fetch(`https://rawg.io/api/games?search=${text}&key=${apiKey}`);
-            const data = await response.json();
-            const game = data.results.slice(0, 1);
-            const name = game[0].name;
-            const id = game[0].id;
-            const image = game[0].background_image;
-            const rating = game[0].rating;
-            setData([{ name, id, image, rating }]);
-        };
-        getData();
 
-    }
-    const addGame = async() => {
-        const docRef = await addDoc(collection(db, "user_games"), {
-            game: data[0].name,
-            image: data[0].image,
-            gid: data[0].id,
-            uid: username,
-            rating: rating
-        });
-    }
     const mygames = () =>{
         navigation.navigate('MyGames');
     }
@@ -75,6 +46,7 @@ export default function Home({ route }) {
         games:{
             display: 'flex',
             flexDirection: 'column',
+            flex: 0,
             flexWrap: 'wrap',
             justifyContent: 'space-around',
             padding: 20,
@@ -99,52 +71,23 @@ export default function Home({ route }) {
             flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'center',
-        }
+        },
+        bottomNavbar: {
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: 60, // Adjust according to navbar height
+            backgroundColor: '#f2f2f2',
+            paddingHorizontal: 20,
+            paddingVertical: 10,
+        },
 
     });
     return (
-        <View>
-            <View style={{ justifyContent: 'center', alignItems: 'center' }}><Text>Home</Text>
-            </View>
-
-            <View style = {{justifyContent: "center", alignItems: 'center',}}>
-            {data.map((game, index) => (
-                <View style = {styles.add} key={index}>
-                    <Text>{game.name}</Text>
-                    <Image
-                        source={{ uri: game.image }}
-                        style={{ width: 200, height: 200 }}
-                    />
-                    <Rating
-                        id = {game.id}
-                        type='custom'
-                        showRating
-                        onFinishRating={ratingCompleted}
-                        ratingColor='red'
-                        ratingBackgroundColor='#c8c7c8'
-                        startingValue= {3}
-                        ratingCount ={5}
-                    />
-                    <Button title = "Add" onPress = {() => addGame()}/>
-                </View>
-                
-            ))}
-            </View>
-
-                <Text>Enter a video game name here</Text>
-            <View style = {styles.search}>
-                <TextInput
-                    editable
-                    // multiline
-                    // numberOfLines={4}
-                    // maxLength={40}
-                    onChangeText={text => onChangeText(text)}
-                    value={text}
-                    style={styles.input}
-                />
-                <Button           
-                title="Submit"
-                onPress = {() => searchSubmit()}/>
+        <View style = {{flex: 1}}>
+            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                <Text>Home</Text>
             </View>
 
             <Text onPress = {() => mygames()}>My Games</Text>
@@ -152,7 +95,6 @@ export default function Home({ route }) {
             {userGames.map((game, index) => (
                 <View style = {styles.games} key={index} >
                     <Text>{game.name}</Text>
-                    <Text>{game.rating}</Text>
                     <Image
                         source={{ uri: game.image }}
                         style={{ display: "flex", width: 200, height: 200 }}
@@ -177,4 +119,8 @@ export default function Home({ route }) {
         </View>
     );
 
+}
+
+Home.navigationOptions = {
+    headerLeft: null,
 }

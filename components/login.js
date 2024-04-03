@@ -10,8 +10,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login() {
     const navigation = useNavigation();
-    const [password, setPass] = React.useState('');
-    const [username, setUser] = React.useState('');
+    const [password, setPass] = useState('');
+    const [username, setUser] = useState('');
     const [staySignedIn, setStaySignedIn] = useState(true);
 
     const buttonPress = () => {

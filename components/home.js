@@ -6,24 +6,13 @@ import { db } from '../firebaseConfig'
 import { collection, getDocs, addDoc, where, query} from "firebase/firestore";
 import { Rating, RatingProps } from 'react-native-ratings';
 import config from './config';
-
 // import { Rating, AirbnbRating } from 'react-native-elements';
-// import {RAWGAPIKEY} from "react-native-dotenv"
+
 export default function Home({ route }) {
-    const [data, setData] = useState([]);
     const [userGames, setGames] = useState([]);
-    const [text, setText] = useState('');
-    const [rating, setRating] = useState([]);
     const { username } = route.params;
-
-
-
-    // const apiKey = RAWGAPI
-    // console.log(apiKey)
     const apiKey = config.RAWGAPIKEY;
     const navigation = useNavigation();
-
-
     
     useEffect(() => {
         const fetchData = async () => {

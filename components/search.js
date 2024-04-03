@@ -5,12 +5,13 @@ import { db } from '../firebaseConfig'
 import { collection, getDocs, addDoc, where, query} from "firebase/firestore";
 import { Rating, RatingProps } from 'react-native-ratings';
 import Navbar from "./navbar";
+import config from './config';
 
 export default function Search({username}) {
     const [data, setData] = useState([]);
     const [text, setText] = useState('');
     const [rating, setRating] = useState([]);
-    const apiKey = '0cca977a2f9f43caa5f37f1cbdea2f64';
+    const apiKey = config.RAWGAPIKEY;
     const onChangeText = (text) => {
         setText(text);
     }

@@ -5,6 +5,8 @@ import { Button, Alert, StyleSheet, Text, View, Image, TextInput, ScrollView } f
 import { db } from '../firebaseConfig'
 import { collection, getDocs, addDoc, where, query} from "firebase/firestore";
 import { Rating, RatingProps } from 'react-native-ratings';
+import config from './config';
+
 // import { Rating, AirbnbRating } from 'react-native-elements';
 // import {RAWGAPIKEY} from "react-native-dotenv"
 export default function Home({ route }) {
@@ -14,9 +16,11 @@ export default function Home({ route }) {
     const [rating, setRating] = useState([]);
     const { username } = route.params;
 
+
+
     // const apiKey = RAWGAPI
     // console.log(apiKey)
-    const apiKey = '0cca977a2f9f43caa5f37f1cbdea2f64';
+    const apiKey = config.RAWGAPIKEY;
     const navigation = useNavigation();
 
 

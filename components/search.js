@@ -7,11 +7,14 @@ import { Rating, RatingProps } from 'react-native-ratings';
 import Navbar from "./navbar";
 import config from './config';
 
-export default function Search({username}) {
+export default function Search({route}) {
+    const { username } = route.params;
     const [data, setData] = useState([]);
     const [text, setText] = useState('');
     const [rating, setRating] = useState([]);
     const apiKey = config.RAWGAPIKEY;
+
+
     const onChangeText = (text) => {
         setText(text);
     }
@@ -42,6 +45,7 @@ export default function Search({username}) {
             uid: username,
             rating: rating
         });
+        console.log("added")
     }
     const styles = StyleSheet.create({    
         input:{

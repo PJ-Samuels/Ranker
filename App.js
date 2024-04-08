@@ -5,7 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import LoginScreen from './components/login';
 import HomeScreen from './components/home';
-import MyGameScreen from './components/mygames';
+import ProfileScreen from './components/profile';
 import SignupScreen from './components/signup';
 import FriendsScreen from './components/friends';
 import DiscoverScreen from './components/discover';
@@ -20,7 +20,7 @@ export default function App() {
         }}>
         <Stack.Screen name="Login" component={LoginScreen} options={{}} />
         <Stack.Screen name="Home" component={HomeScreen} options={{ headerLeft: () => <></>}} />
-        <Stack.Screen name="MyGames" component={MyGameScreen} options={{ headerLeft: () => <></>}}/>
+        <Stack.Screen name="Profile" component={ProfileScreen} options={{ headerLeft: () => <></>}}/>
         <Stack.Screen name="Signup" component={SignupScreen} options={{ headerLeft: () => <></>}}/>
         <Stack.Screen name="Friends" component={FriendsScreen} options={{ headerLeft: () => <></>}}/>
         <Stack.Screen name="Discover" component={DiscoverScreen} options={{ headerLeft: () => <></>}}/>

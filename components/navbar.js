@@ -34,7 +34,7 @@ export default function Navbar() {
         navigation.navigate('Search', {username})
         break;
       case 2:
-        navigation.navigate('MyGames',  {username})
+        navigation.navigate('Profile',  {username})
         break;
       case 3:
         navigation.navigate('Discover', {username})

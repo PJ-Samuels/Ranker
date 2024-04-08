@@ -42,7 +42,7 @@ export default function Login() {
     useEffect(() => {
       const checkStoredCredentials = async () => {
         const storedCredentials = await AsyncStorage.getItem('userCredentials');
-        console.log(storedCredentials);
+        // console.log(storedCredentials);
         if (storedCredentials && staySignedIn) {
           const { username, password } = JSON.parse(storedCredentials);
           setUser(username);

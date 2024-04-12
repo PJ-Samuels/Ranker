@@ -4,12 +4,13 @@ import Navbar from "./navbar";
 import { Input, Icon, Button } from '@rneui/themed';
 import { db } from '../firebaseConfig'
 import { Rating, RatingProps } from 'react-native-ratings';
-import { collection,getDoc ,getDocs, addDoc, where, query, updateDoc, doc} from "firebase/firestore";
+import { collection,getDoc ,getDocs, addDoc, where, query, updateDoc, doc, deleteDoc} from "firebase/firestore";
 
 
 export default function Friends({route}) {
     const [search, setSearch] = useState('');
     const [result, setResult] = useState("");
+    const [friends, setFriends] = useState([]);
     const { username } = route.params;
     const [friendData, setFriendData] = useState([]);
     const styles = StyleSheet.create({
@@ -34,15 +35,16 @@ export default function Friends({route}) {
                 querySnapshot.forEach((doc) =>{
                     friends.push(doc.data().friend);
                 });
-                var friend_ratings = [];
-                for (const friend of friends) {
-                    const querySnapshot2 = await getDocs(query(collection(db, "user_games"), where("uid", "==", friend)));
-                    querySnapshot2.forEach((doc) => {
-                        // friend_ratings.push(doc.data());
-                        friend_ratings.push({name: doc.data().game, image: doc.data().image, rating: doc.data().rating, id: doc.data().gid});
-                    });
-                }
-                setFriendData(friend_ratings);
+                setFriends(friends);
+                // var friend_ratings = [];
+                // for (const friend of friends) {
+                //     const querySnapshot2 = await getDocs(query(collection(db, "user_games"), where("uid", "==", friend)));
+                //     querySnapshot2.forEach((doc) => {
+                //         // friend_ratings.push(doc.data());
+                //         friend_ratings.push({name: doc.data().game, image: doc.data().image, rating: doc.data().rating, id: doc.data().gid});
+                //     });
+                // }
+                // setFriendData(friend_ratings);
 
             }
         }
@@ -53,7 +55,6 @@ export default function Friends({route}) {
         const fetchUsers = async () =>{
             const querySnapshot = await getDocs(query(collection(db, "users"), where("username", "==", search)));
             if(querySnapshot.empty){
-                console.log('No matching documents');
                 return;
             }
             else{
@@ -67,18 +68,30 @@ export default function Friends({route}) {
         }
         fetchUsers()
     }
+    const removeFriend = async(newFriend) => {
+        setFriends(prevFriends => prevFriends.filter(friends => friends !== newFriend));
+        try {
+        const q = query(collection(db, "user_friends"), 
+                where("uid", "==", username), 
+                where("friend", "==", newFriend));
+        const querySnapshot = await getDocs(q);
+        const docToDelete = querySnapshot.docs[0];
+
+            await deleteDoc(doc(db, "user_friends", docToDelete.id));
+            console.log("Document successfully deleted");
+        } catch (error) {
+            console.error("Error deleting document: ", error);
+        }
+
+    }
     const onAddFriend = async() => {
         const fetchUsers = async () =>{
             const querySnapshot = await getDocs(query(collection(db, "users"), where("username", "==", search)));
-            if(querySnapshot.empty){
-                const docRef = await addDoc(collection(db, "user_friends"),{
-                    uid: username,
-                    friend: search
-                });
-            }
-            else{
-                console.log("already a friend");
-            }
+
+            const docRef = await addDoc(collection(db, "user_friends"),{
+                uid: username,
+                friend: search
+            });
         }
         fetchUsers()
     }
@@ -96,7 +109,15 @@ export default function Friends({route}) {
             <>
                 <Text>No Results</Text>
             </>}
-            {friendData.map((game, index) => (
+            <Text>Friends List</Text>
+            {friends.map((friend, index) =>(
+                <View key={index}>
+                    <Text >{friend}</Text>
+                    <Button title="Remove Friend" onPress = {() => removeFriend(friend)}/>
+                </View>
+            ))}
+            <Text>Friends Reviews</Text>
+            {/* {friendData.map((game, index) => (
                 <View style = {styles.games} key={index} >
                     <Text>{game.name}</Text>
                     <Image
@@ -117,7 +138,7 @@ export default function Friends({route}) {
                     </View>
                 </View>
                 
-            ))}
+            ))} */}
 
             <Navbar/>
         </ScrollView>

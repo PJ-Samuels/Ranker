@@ -38,7 +38,6 @@ export default function MyGame({route}) {
         const querySnapshot = await getDocs(q);
         const docToDelete = querySnapshot.docs[0];
         await deleteDoc(doc(db, "user_games", docToDelete.id));
-
         console.log('Game deleted successfully');
     }
     return (

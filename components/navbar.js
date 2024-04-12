@@ -1,15 +1,17 @@
-import React, {useEffect} from 'react';
-import { Alert } from 'react-native';
+import React, {useEffect, lazy, Suspense } from 'react';
+import { Alert, View, Text } from 'react-native';
 import { Tab } from '@rneui/themed';
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 
 export default function Navbar() {
   const [index, setIndex] = React.useState(0);
   const navigation = useNavigation();
   const [password, setPass] = React.useState('');
   const [username, setUser] = React.useState('');
-
+  
   const titles = ["Home", "Search", "Profile", "Discover", "Friends"];
   useEffect(() => {
     const checkStoredCredentials = async () => {
@@ -49,6 +51,13 @@ export default function Navbar() {
 
   return (
     <>
+    {/* <View>
+      <Text onPress = {() => (navigation.navigate("Home", {username}))}>Home</Text>
+      <Text onPress = {() => (navigation.navigate("Search", {username}))}>Search</Text>
+      <Text onPress = {() => (navigation.navigate("Profile", {username}))}>Profile</Text>
+      <Text onPress = {() => (navigation.navigate("Discover", {username}))}>Discover</Text>
+      <Text onPress = {() => (navigation.navigate("Friends", {username}))}>Friends</Text>
+    </View> */}
       <Tab
         value={index}
         onChange={(selectedIndex) => changePage(selectedIndex)}

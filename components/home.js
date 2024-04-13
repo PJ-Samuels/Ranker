@@ -6,7 +6,6 @@ import { db } from '../firebaseConfig'
 import { collection, getDocs, addDoc, where, query} from "firebase/firestore";
 import { Rating, RatingProps } from 'react-native-ratings';
 import config from './config';
-// import { Rating, AirbnbRating } from 'react-native-elements';
 
 export default function Home({ route }) {
     const [userGames, setGames] = useState([]);
@@ -20,7 +19,6 @@ export default function Home({ route }) {
                 const querySnapshot = await getDocs(query(collection(db, "user_games"), where("uid", "==", username)));
                 var games = [];
                 querySnapshot.forEach((doc) => {
-                    // console.log(`${doc.id} => ${doc.data()}`);
                     games.push({name: doc.data().game, image: doc.data().image, rating: doc.data().rating, id: doc.data().gid});
                 });
                 setGames(games);
@@ -70,7 +68,7 @@ export default function Home({ route }) {
             bottom: 0,
             left: 0,
             right: 0,
-            height: 60, // Adjust according to navbar height
+            height: 60,
             backgroundColor: '#f2f2f2',
             paddingHorizontal: 20,
             paddingVertical: 10,

@@ -1,5 +1,4 @@
 import React,  { useEffect, useState, useSyncExternalStore }  from "react";
-// import {NavigationContainer} from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { useNavigation } from "@react-navigation/native";
 import { Alert,StyleSheet, Text, View, TextInput } from 'react-native';
@@ -42,7 +41,6 @@ export default function Login() {
     useEffect(() => {
       const checkStoredCredentials = async () => {
         const storedCredentials = await AsyncStorage.getItem('userCredentials');
-        // console.log(storedCredentials);
         if (storedCredentials && staySignedIn) {
           const { username, password } = JSON.parse(storedCredentials);
           setUser(username);
@@ -57,27 +55,22 @@ export default function Login() {
 
     return(
     <View style={styles.container}>
-        <Text>Video Game Rater</Text>
-        {/* <Text>Username</Text> */}
+        <Text style = {styles.Header}>Video Game Rater</Text>
         <Input
           placeholder='Username'
           onChangeText = {username => setUser(username)} value={username}
         />
-        {/* <TextInput editable onChangeText = {username => setUser(username)} value={username}/> */}
-        {/* <Text>Password</Text> */}
         <Input placeholder="password" onChangeText = {password => setPass(password)} value={password}/>
-        {/* <TextInput editable onChangeText = {password => setPass(password)} value={password}/>
-        <Text>Login </Text> */}
 
         <Button
           title="Login"
-          color = "blue"
+          buttonStyle={{ backgroundColor: '#c5d2f5' }}
           onPress={() => buttonPress()}
+          containerStyle={{ margin: 10 , padding: 10}}
         />
-
         <Button
         title = "Sign up"
-        color = "blue"
+        buttonStyle={{ backgroundColor: '#c5d2f5' }}
         onPress={({}) => signupButton()}
         />
         <StatusBar style="auto" />
@@ -88,8 +81,13 @@ export default function Login() {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#fff',
+      backgroundColor: '#707280',
       alignItems: 'center',
       justifyContent: 'center',
+    },
+    Header:{
+      fontSize: 60,
+      color: 'white'
     }
+
 });

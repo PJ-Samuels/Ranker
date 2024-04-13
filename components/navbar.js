@@ -26,8 +26,6 @@ export default function Navbar() {
   }, []);
   const changePage = (selectedIndex) => {
     setIndex(selectedIndex);
-
-    // You can add navigation logic here based on the selected index
     switch (selectedIndex) {
       case 0:
         navigation.navigate('Home', {username})

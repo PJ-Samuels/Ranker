@@ -13,16 +13,7 @@ export default function Friends({route}) {
     const [friends, setFriends] = useState([]);
     const { username } = route.params;
     const [friendData, setFriendData] = useState([]);
-    const styles = StyleSheet.create({
-        games:{
-            display: 'flex',
-            flexDirection: 'column',
-            flex: 0,
-            flexWrap: 'wrap',
-            justifyContent: 'space-around',
-            padding: 20,
-        }
-    });
+
     useEffect(() => {
         const fetchData = async () => {
             const querySnapshot = await getDocs(query(collection(db, "user_friends") ,where("uid", "==", username)));
@@ -96,7 +87,8 @@ export default function Friends({route}) {
         fetchUsers()
     }
     return(
-        <ScrollView>
+        <View style= {styles.container} >
+            <ScrollView >
             <Text>Friends Page</Text>
             <Input placeholder = "Friend Search" onChangeText = {search => setSearch(search)}/>
             <Button title = "Search" onPress = {onButtonPress}/>
@@ -142,5 +134,20 @@ export default function Friends({route}) {
 
             <Navbar/>
         </ScrollView>
+        </View>
         )
 }
+const styles = StyleSheet.create({
+    games:{
+        display: 'flex',
+        flexDirection: 'column',
+        flex: 0,
+        flexWrap: 'wrap',
+        justifyContent: 'space-around',
+        padding: 20,
+    },
+    container : {
+        flex: 1,
+        justifyContent: 'flex-end',
+    }
+});

@@ -1,8 +1,9 @@
 import React, {useEffect, lazy, Suspense } from 'react';
-import { Alert, View, Text } from 'react-native';
+import { Alert, View, Text, StyleSheet } from 'react-native';
 import { Tab } from '@rneui/themed';
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Icon } from '@rneui/themed';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 
@@ -12,7 +13,7 @@ export default function Navbar() {
   const [password, setPass] = React.useState('');
   const [username, setUser] = React.useState('');
   
-  const titles = ["Home", "Search", "Profile", "Discover", "Friends"];
+  const titles = ["home", "search", "user", "list", "group"];
   useEffect(() => {
     const checkStoredCredentials = async () => {
       const storedCredentials = await AsyncStorage.getItem('userCredentials');
@@ -48,7 +49,7 @@ export default function Navbar() {
   }
 
   return (
-    <>
+    <View style = {styles.container}>
     {/* <View>
       <Text onPress = {() => (navigation.navigate("Home", {username}))}>Home</Text>
       <Text onPress = {() => (navigation.navigate("Search", {username}))}>Search</Text>
@@ -59,8 +60,15 @@ export default function Navbar() {
       <Tab
         value={index}
         onChange={(selectedIndex) => changePage(selectedIndex)}
+        containerStyle={{
+          backgroundColor: '#707280',
+          color: 'white',
+          height: 50,
+
+        }}
         indicatorStyle={{
-          backgroundColor: 'white',
+          backgroundColor: null,
+          color: null,
           height: 3,
         }}
         variant="primary"
@@ -68,12 +76,17 @@ export default function Navbar() {
         {titles.map((title, tabIndex) => (
           <Tab.Item
             key={tabIndex}
-            title={title}
-            titleStyle={{ fontSize: 12 }}
-            icon={{type: 'ionicon', color: 'white' }}
+            titleStyle={{ fontSize: 9 }}
+            icon={{type: 'font-awesome', color: 'white', name: title }}
           />
         ))}
       </Tab>
-    </>
+    </View>
   )
 }
+const styles = StyleSheet.create({
+  container :{
+    paddingBottom : 30,
+    backgroundColor: '#707280',
+  }
+})

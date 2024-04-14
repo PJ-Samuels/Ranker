@@ -13,13 +13,12 @@ export default function Discover() {
             const data = await response.json();
             const games = data.results.map(game => {
                 const { name, id, background_image: image, rating } = game;
-                console.log(name)
-                console.log([ name, id, image, rating ])
+                // console.log(name)
+                // console.log([ name, id, image, rating ])
                 return { name, id, image, rating };
             });
             setData(games);
-            console.log(games);
-        
+            // console.log(games) 
         }
         fetchData();
     }, []);

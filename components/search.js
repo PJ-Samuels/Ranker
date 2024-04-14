@@ -68,9 +68,14 @@ export default function Search({route}) {
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-    }});
+        },
+        container: {
+            flex: 1,
+            justifyContent: 'flex-end',
+        },
+    });
     return(
-        <View style = {{flex: 1}}>
+        <View style = {styles.container}>
             <Text>Search Page</Text>
             <View style = {{justifyContent: "center", alignItems: 'center',}}>
             {data.map((game, index) => (
@@ -110,5 +115,5 @@ export default function Search({route}) {
             </View>
             <Navbar/>
         </View>
-        )
+    )
 }

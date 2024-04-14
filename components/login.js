@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Alert,StyleSheet, Text, View, TextInput } from 'react-native';
 import { db } from '../firebaseConfig'
 import { collection, getDocs, addDoc, where, query} from "firebase/firestore";
-import { Input, Icon, Button } from '@rneui/themed';
+import { Input, Icon, Button,CheckBox } from '@rneui/themed';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login() {
@@ -51,6 +51,9 @@ export default function Login() {
       checkStoredCredentials();
 
     }, []);
+    const staySigned = (temp) => {
+      setStaySignedIn(!staySignedIn)
+    }
   
 
     return(
@@ -58,21 +61,35 @@ export default function Login() {
         <Text style = {styles.Header}>Video Game Rater</Text>
         <Input
           placeholder='Username'
+          backgroundColor = 'white'
           onChangeText = {username => setUser(username)} value={username}
         />
-        <Input placeholder="password" onChangeText = {password => setPass(password)} value={password}/>
+        <Input 
+          placeholder="Password"
+          onChangeText = {password => setPass(password)} 
+          value={password}
+          backgroundColor = 'white'
+          secureTextEntry={true}
+          />
 
         <Button
           title="Login"
-          buttonStyle={{ backgroundColor: '#c5d2f5' }}
+          buttonStyle={{ backgroundColor: '#c5d2f5', width: 100}}
           onPress={() => buttonPress()}
           containerStyle={{ margin: 10 , padding: 10}}
         />
         <Button
         title = "Sign up"
-        buttonStyle={{ backgroundColor: '#c5d2f5' }}
+        buttonStyle={{ backgroundColor: '#c5d2f5' , width: 100}}
         onPress={({}) => signupButton()}
         />
+        <CheckBox
+          center
+          checked={staySignedIn}
+          title = 'Stay Signed In'
+          color = '#707280'
+          onPress = {() => staySigned(staySignedIn)}
+          />
         <StatusBar style="auto" />
     </View>
     )
@@ -86,8 +103,9 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
     },
     Header:{
-      fontSize: 60,
-      color: 'white'
+      fontSize: 40,
+      color: 'white',
+      paddingBottom: 80,
     }
 
 });

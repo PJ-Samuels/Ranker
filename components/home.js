@@ -33,74 +33,33 @@ export default function Home({ route }) {
     const mygames = () =>{
         navigation.navigate('MyGames');
     }
-    const styles = StyleSheet.create({
-        games:{
-            display: 'flex',
-            flexDirection: 'column',
-            flex: 0,
-            flexWrap: 'wrap',
-            justifyContent: 'space-around',
-            padding: 20,
-        },
-        input:{
-            height: 40,
-            width: 250,
-            margin: 12,
-            borderWidth: 1,
-            padding: 5,
-
-        },
-        add:{
-
-            flexDirection: 'column',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-            alignItems: 'center',
-            padding: 20,
-        },
-        search:{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-        },
-        bottomNavbar: {
-            position: 'absolute',
-            bottom: 0,
-            left: 0,
-            right: 0,
-            height: 60,
-            backgroundColor: '#f2f2f2',
-            paddingHorizontal: 20,
-            paddingVertical: 10,
-        },
-
-    });
     return (
-        <View style = {{flex: 1}}>
-            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                <Text>Home</Text>
-            </View>
-
+        <View style = {{flex: 1, backgroundColor : "#c9cacf"}}>
             <Text onPress = {() => mygames()}>My Games</Text>
             <ScrollView horizontal>
             {userGames.map((game, index) => (
                 <View style = {styles.games} key={index} >
-                    <Text>{game.name}</Text>
+                    <View style={styles.cardContent}>
+                    <Text style = {{paddingBottom: 10}}>{game.name}</Text>
                     <Image
                         source={{ uri: game.image }}
-                        style={{ display: "flex", width: 200, height: 200 }}
+                        style={{ display: "flex", width: 200, height: 200, borderRadius: 10}}
                     />
                     <View pointerEvents="none">
                         <Rating
                             id = {game.id}
                             type='custom'
-                            showRating
+                            // showRating
                             // onFinishRating={ratingCompleted}
-                            ratingColor='red'
-                            ratingBackgroundColor='#c8c7c8'
+                            ratingColor='#3b66de'
+                            // ratingBackgroundColor='#c8c7c8'
+                            // backgroundColor = "#c8c7c8"
                             startingValue={game.rating}
                             ratingCount ={5}
+                            style = {{marginTop: 10}}
+                            tintColor = "#707280"
                         />
+                    </View>
                     </View>
                 </View>
                 
@@ -115,3 +74,59 @@ export default function Home({ route }) {
 Home.navigationOptions = {
     headerLeft: null,
 }
+const styles = StyleSheet.create({
+    games:{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+
+    },
+    cardContent:{
+        backgroundColor: "#707280",
+        padding: 20,
+        margin: 10,
+        width: 250,
+        borderRadius: 10,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.2,
+        shadowRadius: 5,
+        elevation: 5
+    },
+    input:{
+        height: 40,
+        width: 250,
+        margin: 12,
+        borderWidth: 1,
+        padding: 5,
+
+    },
+    add:{
+
+        flexDirection: 'column',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 20,
+    },
+    search:{
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    bottomNavbar: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        height: 60,
+        backgroundColor: '#f2f2f2',
+        paddingHorizontal: 20,
+        paddingVertical: 10,
+    },
+
+});

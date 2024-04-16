@@ -1,9 +1,10 @@
 import React from 'react';
 import {useState} from 'react';
-import {Button, Text, View, StyleSheet, TextInput, Image} from 'react-native';
+import {Text, View, StyleSheet, TextInput, Image} from 'react-native';
 import { db } from '../firebaseConfig'
 import { collection, getDocs, addDoc, where, query} from "firebase/firestore";
 import { Rating, RatingProps } from 'react-native-ratings';
+import {Input, Button } from '@rneui/themed';
 import Navbar from "./navbar";
 import config from './config';
 
@@ -65,18 +66,19 @@ export default function Search({route}) {
             padding: 20,
         },    
         search:{
-        flexDirection: 'row',
+        flex: '1',
         justifyContent: 'center',
         alignItems: 'center',
         },
         container: {
             flex: 1,
             justifyContent: 'flex-end',
+            backgroundColor: "#c9cacf",
         },
     });
     return(
         <View style = {styles.container}>
-            <Text>Search Page</Text>
+            {/* <Text>Search Page</Text> */}
             <View style = {{justifyContent: "center", alignItems: 'center',}}>
             {data.map((game, index) => (
                 <View style = {styles.add} key={index}>
@@ -88,10 +90,11 @@ export default function Search({route}) {
                     <Rating
                         id = {game.id}
                         type='custom'
-                        showRating
+                        // showRating
                         onFinishRating={ratingCompleted}
-                        ratingColor='red'
-                        ratingBackgroundColor='#c8c7c8'
+                        ratingColor='#3b66de'
+                        // ratingBackgroundColor='#c8c7c8'
+                        tintColor = "#c9cacf"
                         startingValue= {3}
                         ratingCount ={5}
                     />
@@ -101,14 +104,25 @@ export default function Search({route}) {
             ))}
             </View>
 
-            <Text>Enter a video game name here</Text>
+
             <View style = {styles.search}>
-                <TextInput
+                <Text>Enter a video game name here</Text>
+                {/* <TextInput
                     editable
                     onChangeText={text => onChangeText(text)}
                     value={text}
                     style={styles.input}
-                />
+                /> */}
+                <View style={{ width: '80%' }}>
+                    <Input 
+                        placeholder="Search"
+                        onChangeText = {text => onChangeText(text)} 
+                        value={text}
+                        backgroundColor = 'white'
+                        inputContainerStyle={{ }}
+                    />
+                </View>
+
                 <Button           
                 title="Submit"
                 onPress = {() => searchSubmit()}/>

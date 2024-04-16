@@ -89,7 +89,7 @@ export default function Friends({route}) {
     return(
         <View style= {styles.container} >
             <ScrollView >
-            <Text>Friends Page</Text>
+            {/* <Text>Friends Page</Text> */}
             <Input placeholder = "Friend Search" onChangeText = {search => setSearch(search)}/>
             <Button title = "Search" onPress = {onButtonPress}/>
             {result ? 
@@ -131,11 +131,10 @@ export default function Friends({route}) {
                 </View>
                 
             ))} */}
-
-            <Navbar/>
         </ScrollView>
+        <Navbar/>
         </View>
-        )
+    )
 }
 const styles = StyleSheet.create({
     games:{

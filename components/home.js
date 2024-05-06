@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useSyncExternalStore } from "react";
 import Navbar from "./navbar";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect} from "@react-navigation/native";
 import { Button, Alert, StyleSheet, Text, View, Image, TextInput, ScrollView } from 'react-native';
 import { db } from '../firebaseConfig'
 import { collection, getDocs, addDoc, where, query} from "firebase/firestore";
@@ -12,22 +12,32 @@ export default function Home({ route }) {
     const { username } = route.params;
     const apiKey = config.RAWGAPIKEY;
     const navigation = useNavigation();
-    
+    const fetchData = async () => {
+        try{
+            const querySnapshot = await getDocs(query(collection(db, "user_games"), where("uid", "==", username)));
+            var games = [];
+            querySnapshot.forEach((doc) => {
+                games.push({
+                    name: doc.data().game, 
+                    image: doc.data().image,
+                    rating: doc.data().rating, 
+                    id: doc.data().gid});
+            });
+            setGames(games);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
+    fetchData();
     useEffect(() => {
-        const fetchData = async () => {
-            try{
-                const querySnapshot = await getDocs(query(collection(db, "user_games"), where("uid", "==", username)));
-                var games = [];
-                querySnapshot.forEach((doc) => {
-                    games.push({name: doc.data().game, image: doc.data().image, rating: doc.data().rating, id: doc.data().gid});
-                });
-                setGames(games);
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            }
-        };
         fetchData();
     }, []);
+    useFocusEffect(
+        React.useCallback(() => {
+            fetchData();
+        }, [])
+    );
+
 
 
     const mygames = () =>{
@@ -45,7 +55,7 @@ export default function Home({ route }) {
                         source={{ uri: game.image }}
                         style={{ display: "flex", width: 200, height: 200, borderRadius: 10}}
                     />
-                    <View pointerEvents="none">
+                    <View>
                         <Rating
                             id = {game.id}
                             type='custom'
@@ -58,6 +68,7 @@ export default function Home({ route }) {
                             ratingCount ={5}
                             style = {{marginTop: 10}}
                             tintColor = "#707280"
+                            readonly = {true}
                         />
                     </View>
                     </View>

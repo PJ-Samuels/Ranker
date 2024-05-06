@@ -16,13 +16,13 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ animation: 'none'}}>
-        <Stack.Screen name="Login" component={LoginScreen} options={{}} />
-        <Stack.Screen name="Home" component={HomeScreen} options={{ headerLeft: () => <></>}} />
-        <Stack.Screen name="Profile" component={ProfileScreen} options={{ headerLeft: () => <></>}}/>
-        <Stack.Screen name="Signup" component={SignupScreen} options={{ headerLeft: () => <></>}}/>
-        <Stack.Screen name="Friends" component={FriendsScreen} options={{ headerLeft: () => <></>}}/>
-        <Stack.Screen name="Discover" component={DiscoverScreen} options={{ headerLeft: () => <></>}}/>
-        <Stack.Screen name="Search" component={SearchScreen} options={{ headerLeft: () => <></>}}/>
+        <Stack.Screen name="Login" component={LoginScreen} options={{gestureEnabled: false}} />
+        <Stack.Screen name="Home" component={HomeScreen} options={{ headerLeft: () => <></>, gestureEnabled: false}} />
+        <Stack.Screen name="Profile" component={ProfileScreen} options={{ headerLeft: () => <></>, gestureEnabled: false}}/>
+        <Stack.Screen name="Signup" component={SignupScreen} options={{ headerLeft: () => <></>, gestureEnabled: false}}/>
+        <Stack.Screen name="Friends" component={FriendsScreen} options={{ headerLeft: () => <></>, gestureEnabled: false}}/>
+        <Stack.Screen name="Discover" component={DiscoverScreen} options={{ headerLeft: () => <></>,gestureEnabled: false}}/>
+        <Stack.Screen name="Search" component={SearchScreen} options={{ headerLeft: () => <></>,gestureEnabled: false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

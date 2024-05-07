@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {View,Text, Image, ScrollView} from 'react-native';
+import {View,Text, Image, ScrollView, StyleSheet} from 'react-native';
 import Navbar from "./navbar";
 import config from './config';
 import { set } from 'firebase/database';
@@ -23,13 +23,12 @@ export default function Discover() {
         fetchData();
     }, []);
     return(
-        <View style={{ flex: 1 }}>
-            <Text>Discover</Text>
+        <View style={{ flex: 1, backgroundColor: "#c9cacf" }}>
             <ScrollView>
             {data.map((game, index) => (
-                <View key = {index}>
+                <View key = {index} style = {styles.card}>
                     <Text>{game.name}</Text>
-                    <Image source={{uri: game.image}} style={{width: 200, height: 200}}/>
+                    <Image source={{uri: game.image}} style={{width: 200, height: 200, borderRadius: 10}}/>
                 </View>
             ))}
             </ScrollView>
@@ -37,4 +36,14 @@ export default function Discover() {
         </View>        
         )
 }
-
+const styles = StyleSheet.create({
+    card: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#707280',
+        margin: 10,
+        padding: 10,
+        borderRadius: 10
+    }
+})

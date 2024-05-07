@@ -88,8 +88,6 @@ export default function Friends({route}) {
     }
     return(
         <View style= {styles.container} >
-            <ScrollView >
-            {/* <Text>Friends Page</Text> */}
             <Input placeholder = "Friend Search" onChangeText = {search => setSearch(search)}/>
             <Button title = "Search" onPress = {onButtonPress}/>
             {result ? 
@@ -101,14 +99,16 @@ export default function Friends({route}) {
             <>
                 <Text>No Results</Text>
             </>}
+            <ScrollView >
+
             <Text>Friends List</Text>
             {friends.map((friend, index) =>(
-                <View key={index}>
+                <View key={index} style = {styles.follower}>
                     <Text >{friend}</Text>
-                    <Button title="Remove Friend" onPress = {() => removeFriend(friend)}/>
+                    <Button title="Unfollow" onPress = {() => removeFriend(friend)}/>
                 </View>
             ))}
-            <Text>Friends Reviews</Text>
+            {/* <Text>Friends Reviews</Text> */}
             {/* {friendData.map((game, index) => (
                 <View style = {styles.games} key={index} >
                     <Text>{game.name}</Text>
@@ -148,5 +148,11 @@ const styles = StyleSheet.create({
     container : {
         flex: 1,
         justifyContent: 'flex-end',
+        backgroundColor: '#c9cacf'
+    },
+    follower:{
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignContent: 'center',
     }
 });

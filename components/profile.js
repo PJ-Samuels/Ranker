@@ -7,6 +7,7 @@ import { collection, getDocs, addDoc, where, query, deleteDoc, doc, updateDoc} f
 import {db} from '../firebaseConfig';
 import { Rating } from 'react-native-ratings';
 import { set } from "firebase/database";
+import { Icon } from '@rneui/themed';
 
 export default function MyGame({route}) {
     const navigation = useNavigation();
@@ -126,19 +127,43 @@ export default function MyGame({route}) {
         
     }
     return (
-        <View style = {{flex: 1}}>
-            <Text>My Games</Text>
-                <ScrollView> 
+        <View style = {{flex: 1, backgroundColor: "#c9cacf"}}>
+            <View style = {styles.topnav}>
+                <Text>
+                    <Icon name = "person"/>
+                </Text>
+                <Text>
+                    <Icon name = "settings"/>
+                </Text>
+                <Text title = "Logout" onPress = {onLogout}>
+                    <Icon name='logout' />
+                </Text>
+            </View>
+
+            <ScrollView> 
                 {userGames.map((game,index)=> (
-                    <View key = {index} p>
+                <View style = {styles.card}>
+                    <View style = {styles.buttons}>
+                        <Text title="" onPress={() => onDelete(game.name)}>
+                            <Icon name='remove' />
+                        </Text>
+
+                        <Text onPress = {()=> onEdit(game.name)}>
+                            <Icon name='edit' />
+                        </Text>
+                        <Text onPress = {() => onSave(game.name)}>
+                            <Icon name='check' />
+                        </Text>
+                    </View>
+                    <View style = {styles.container} key = {index}>
                         <Text>{game.name}</Text>
-                        <Image source = {{uri: game.image}} style = {{width: 200, height: 200}}/>
+                        <Image source = {{uri: game.image}} style = {{width: 200, height: 200, borderRadius: 10}}/>
                         <Rating
-                            id = {game.id}
-                            type='custom'
-                            onFinishRating={(newRating) => handleRatingChange(newRating,game.name)}
-                            ratingColor='#3b66de'
-                            startingValue={game.rating}
+                                id = {game.id}
+                                type='custom'
+                                onFinishRating={(newRating) => handleRatingChange(newRating,game.name)}
+                                ratingColor='#3b66de'
+                                startingValue={game.rating}
                             ratingCount ={5}
                             style = {{marginTop: 10}}
                             readonly={game.editable}
@@ -154,17 +179,40 @@ export default function MyGame({route}) {
                             placeholder={game.review}
                             onChangeText={(text) => onChangeText(text,  game.name)}
                         />
-                        <Button title = "Edit" onPress = {()=> onEdit(game.name)}></Button>
-                        <Button title = "save" onPress = {() => onSave(game.name)}></Button>
-                        <Button title = "delete" onPress = {() => onDelete(game.name)}></Button>
-                    </View>
-                
-                ))}
-            </ScrollView>
-            <Text>Settings</Text>
-            <Button title = "Logout" onPress = {onLogout}></Button>
 
+                    </View>
+                </View>
+            
+            ))}
+            </ScrollView>
             <Navbar/>
         </View>
     )
 }
+const styles = StyleSheet.create({
+    container :
+    {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    buttons : {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        marginTop: 10
+    },
+    card:{
+        backgroundColor: "#707280",
+        margin: 10,
+        padding: 10,
+        borderRadius: 10
+    },
+    topnav:
+    {
+        paddingTop: 10,
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignContent: 'center',
+    }
+})

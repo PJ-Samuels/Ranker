@@ -17,7 +17,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ animation: 'none'}}>
         <Stack.Screen name="Login" component={LoginScreen} options={{gestureEnabled: false}} />
-        <Stack.Screen name="Home" component={HomeScreen} options={{ headerLeft: () => <></>, gestureEnabled: false}} />
+        <Stack.Screen name="Home" component={HomeScreen} options={{ headerLeft: () => <></>, gestureEnabled: false, title: null}} />
         <Stack.Screen name="Profile" component={ProfileScreen} options={{ headerLeft: () => <></>, gestureEnabled: false}}/>
         <Stack.Screen name="Signup" component={SignupScreen} options={{ headerLeft: () => <></>, gestureEnabled: false}}/>
         <Stack.Screen name="Friends" component={FriendsScreen} options={{ headerLeft: () => <></>, gestureEnabled: false}}/>

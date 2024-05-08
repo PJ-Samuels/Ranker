@@ -58,7 +58,7 @@ export default function Login() {
 
     return(
     <View style={styles.container}>
-        <Text style = {styles.Header}>Video Game Rater</Text>
+        <Text style = {styles.Header}>Ranker</Text>
         <Input
           placeholder='Username'
           backgroundColor = 'white'

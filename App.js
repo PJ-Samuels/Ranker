@@ -10,7 +10,7 @@ import SignupScreen from './components/signup';
 import FriendsScreen from './components/friends';
 import DiscoverScreen from './components/discover';
 import SearchScreen from './components/search';
-import FriendsFeed from './components/friendsfeed';
+import FeedScreen from './components/feed';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -19,7 +19,7 @@ export default function App() {
       <Stack.Navigator screenOptions={{ animation: 'none'}}>
         <Stack.Screen name="Login" component={LoginScreen} options={{gestureEnabled: false}} />
         <Stack.Screen name="Home" component={HomeScreen} options={{ headerLeft: () => <></>, gestureEnabled: false, title: null}} />
-        <Stack.Screen name = "FriendsFeed" component={FriendsFeed} options={{ headerLeft: () => <></>, gestureEnabled: false}}/>
+        <Stack.Screen name = "Feed" component={FeedScreen} options={{ headerLeft: () => <></>, gestureEnabled: false}}/>
         <Stack.Screen name="Profile" component={ProfileScreen} options={{ headerLeft: () => <></>, gestureEnabled: false}}/>
         <Stack.Screen name="Signup" component={SignupScreen} options={{ headerLeft: () => <></>, gestureEnabled: false}}/>
         <Stack.Screen name="Friends" component={FriendsScreen} options={{ headerLeft: () => <></>, gestureEnabled: false}}/>

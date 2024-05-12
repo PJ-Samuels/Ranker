@@ -89,7 +89,7 @@ export default function Friends({route}) {
         fetchUsers()
     }
     const friendReviews = () =>{
-        navigation.navigate('FriendsFeed', {username: username});
+        navigation.navigate('Feed', {username: username});
     }
     return(
         <View style= {styles.container} >

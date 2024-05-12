@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react';
 import {View,Text, Image, ScrollView, StyleSheet} from 'react-native';
 import Navbar from "./navbar";
 import config from './config';
-import { set } from 'firebase/database';
-
-export default function Discover() {
+export default function Discover({route}) {
     const apiKey = config.RAWGAPIKEY;
+    const username = route.params.username;
     const [data, setData] = useState([]);
     useEffect(() => {
         const fetchData = async () =>{
@@ -13,12 +12,9 @@ export default function Discover() {
             const data = await response.json();
             const games = data.results.map(game => {
                 const { name, id, background_image: image, rating } = game;
-                // console.log(name)
-                // console.log([ name, id, image, rating ])
                 return { name, id, image, rating };
             });
             setData(games);
-            // console.log(games) 
         }
         fetchData();
     }, []);

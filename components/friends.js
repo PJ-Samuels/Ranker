@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {Text,View, StyleSheet, Image, ScrollView} from 'react-native';
+import { useNavigation, useFocusEffect} from "@react-navigation/native";
 import Navbar from "./navbar";
 import { Input, Icon, Button } from '@rneui/themed';
 import { db } from '../firebaseConfig'
@@ -13,6 +14,7 @@ export default function Friends({route}) {
     const [friends, setFriends] = useState([]);
     const { username } = route.params;
     const [friendData, setFriendData] = useState([]);
+    const navigation = useNavigation();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -86,6 +88,9 @@ export default function Friends({route}) {
         }
         fetchUsers()
     }
+    const friendReviews = () =>{
+        navigation.navigate('FriendsFeed', {username: username});
+    }
     return(
         <View style= {styles.container} >
             <Input placeholder = "Friend Search" onChangeText = {search => setSearch(search)}/>
@@ -108,30 +113,9 @@ export default function Friends({route}) {
                     <Button title="Unfollow" onPress = {() => removeFriend(friend)}/>
                 </View>
             ))}
-            {/* <Text>Friends Reviews</Text> */}
-            {/* {friendData.map((game, index) => (
-                <View style = {styles.games} key={index} >
-                    <Text>{game.name}</Text>
-                    <Image
-                        source={{ uri: game.image }}
-                        style={{ display: "flex", width: 200, height: 200 }}
-                    />
-                    <View pointerEvents="none">
-                        <Rating
-                            id = {game.id}
-                            type='custom'
-                            showRating
-                            // onFinishRating={ratingCompleted}
-                            ratingColor='red'
-                            ratingBackgroundColor='#c8c7c8'
-                            startingValue={game.rating}
-                            ratingCount ={5}
-                        />
-                    </View>
-                </View>
-                
-            ))} */}
+
         </ScrollView>
+        <Text onPress = {() => friendReviews()}>Friends Reviews</Text>
         <Navbar/>
         </View>
     )

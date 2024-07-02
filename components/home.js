@@ -5,12 +5,13 @@ import { Button, Alert, StyleSheet, Text, View, Image, TextInput, ScrollView } f
 import { db } from '../firebaseConfig'
 import { collection, getDocs, addDoc, where, query} from "firebase/firestore";
 import { Rating, RatingProps } from 'react-native-ratings';
-import config from './config';
+// import config from './config';
 
 export default function Home({ route }) {
     const [userGames, setGames] = useState([]);
     const { username } = route.params;
-    const apiKey = config.RAWGAPIKEY;
+    //const apiKey = config.RAWGAPIKEY;
+    const apiKey = "0cca977a2f9f43caa5f37f1cbdea2f64"
     const navigation = useNavigation();
     const fetchData = async () => {
         try{

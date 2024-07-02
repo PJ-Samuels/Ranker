@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import {View,Text, Image, ScrollView, StyleSheet} from 'react-native';
 import Navbar from "./navbar";
-import config from './config';
+// import config from './config';
 export default function Discover({route}) {
-    const apiKey = config.RAWGAPIKEY;
+    // const apiKey = config.RAWGAPIKEY;
+    const apiKey = "0cca977a2f9f43caa5f37f1cbdea2f64"
     const username = route.params.username;
     const [data, setData] = useState([]);
     useEffect(() => {

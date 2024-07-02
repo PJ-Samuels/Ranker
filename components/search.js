@@ -6,14 +6,15 @@ import { collection, getDocs, addDoc, where, query} from "firebase/firestore";
 import { Rating, RatingProps } from 'react-native-ratings';
 import {Input, Button } from '@rneui/themed';
 import Navbar from "./navbar";
-import config from './config';
+//import config from './config';
 
 export default function Search({route}) {
     const { username } = route.params;
     const [data, setData] = useState([]);
     const [text, setText] = useState('');
     const [rating, setRating] = useState([]);
-    const apiKey = config.RAWGAPIKEY;
+    //const apiKey = config.RAWGAPIKEY;
+    const apiKey = "0cca977a2f9f43caa5f37f1cbdea2f64"
 
 
     const onChangeText = (text) => {

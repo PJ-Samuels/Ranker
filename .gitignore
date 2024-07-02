@@ -5,7 +5,7 @@ node_modules/
 .env
 components/config.js
 # Expo
-*.eas.json
+eas.json
 
 .expo/
 dist/
